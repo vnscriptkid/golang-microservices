@@ -72,3 +72,19 @@ stop:
 	@echo Stopping front end...
 	@taskkill /IM "${FRONT_END_BINARY}" /F
 	@echo "Stopped front end!"
+
+## proto generator for logger-service
+proto_logger:
+	chdir ..\logger-service\logs && rm -f *.go && protoc --proto_path=. --go_out=. --go_opt=paths=source_relative \
+    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+	*.proto
+
+## proto generator for broker-service
+proto_broker:
+	chdir ..\broker-service\logs && rm -f *.go && protoc --proto_path=. --go_out=. --go_opt=paths=source_relative \
+    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+	*.proto
+
+## mongo cli
+mongocli:
+	docker exec -it x-mongo mongo -u admin -p password
